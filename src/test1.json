@@ -4,6 +4,7 @@
         "flyEndAction": 0,
         "flyType": 1,
         "frameUpdateTime": 0.01666666753590107,
+        "aRoll": true,
         "poiList": [
           {
             "lType": 1,

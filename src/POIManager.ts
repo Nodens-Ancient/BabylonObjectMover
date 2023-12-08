@@ -5,37 +5,35 @@ import { POI } from "./POI";
 export class POIManager {
     public target: TransformNode;
     public poiList: Array<POI> = new Array<POI>();
-
-    public flythroughType: FlythroughType = FlythroughType.SingleShot;
-    public currentPosition: Vector3 = Vector3.Zero();
-    public currentRotation: Quaternion = Quaternion.Identity();
-    public currentSegmentIdx: number;
-    public currentSegment: POI;
-
-    public canUpdateNow: boolean = false;
-
-    public currentSegmentDistanceTravelled: number = 0;
-    public totalDistanceTravelled: number = 0;
-    public totalDistanceTravelledPct: number = 0;
-    public totalDistance: number = 0;
-    public currentVelocity: number = 0;
-    public rotationDamping: number = 0.75;
-    public positionDamping: number = 0.3;
-
-    public frameUpdateDistance: number = 0;
-    public frameUpdateTime: number = 1 / 60;
-
+    public flythroughType: FlythroughType;
     public autoRollMaxSpeed: number;
     public autoRollMaxAngle: number;
 
+    private currentPosition: Vector3 = Vector3.Zero();
+    private currentRotation: Quaternion = Quaternion.Identity();
+    private currentSegmentIdx: number;
+    private currentSegment: POI;
+
+    private canUpdateNow: boolean = false;
+
+    private currentSegmentDistanceTravelled: number = 0;
+    private totalDistanceTravelled: number = 0;
+    private totalDistanceTravelledPct: number;
+    private totalDistance: number = 0;
+    private currentVelocity: number = 0;
+    private rotationDamping: number = 0.75;
+    private positionDamping: number = 0.3;
+
+    public frameUpdateDistance: number = 0;
     public currentState: FlythroughState = FlythroughState.Stopped;
 
-    constructor(poiList: any[], flythroughType: FlythroughType, m_autoRollMaxSpeed: number, autoRollMaxAngle: number,
-        frameUpdateTime: number) {
+    constructor(poiList: any[], flythroughType: FlythroughType, autoRollMaxSpeed: number, autoRollMaxAngle: number,
+        private frameUpdateTime: number) {
+
             this.flythroughType = flythroughType;
-            this.autoRollMaxSpeed = autoRollMaxAngle;
-            this.autoRollMaxSpeed = m_autoRollMaxSpeed;
-            this.frameUpdateTime = frameUpdateTime;
+            this.autoRollMaxSpeed = autoRollMaxSpeed;
+            this.autoRollMaxAngle = autoRollMaxAngle;
+
             for (let index = 0; index < poiList.length; index++) {
                 let poi = new POI(
                     poiList[index].lType,
@@ -48,7 +46,8 @@ export class POIManager {
                     poiList[index].positionEType,
                     poiList[index].segmentDist,
                     new Vector3(poiList[index].position.x, poiList[index].position.y, poiList[index].position.z),
-                    new Quaternion(poiList[index].rotation.x, poiList[index].rotation.y, poiList[index].rotation.z, poiList[index].rotation.w)
+                    new Quaternion(poiList[index].rotation.x, poiList[index].rotation.y, poiList[index].rotation.z, poiList[index].rotation.w),
+                    poiList[index].aRoll
                 );
                 poi.manager = this;
                 this.poiList[index] = poi;

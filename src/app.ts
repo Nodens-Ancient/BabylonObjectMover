@@ -52,8 +52,6 @@ class App {
             }); 
         });
 
-        console.log(test1);
-
         let manager = new POIManager(
             test1.poiList,
             test1.flyType,

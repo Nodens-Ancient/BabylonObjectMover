@@ -3,8 +3,6 @@ import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, Mesh, MeshBu
 import { POIManager, FlythroughType } from "./POIManager";
 
 export class POI {
-    public autoRollOn: boolean;
-
     public segmentDistance: number;
     public segmentIndex: number;
     public isLastPOI: boolean = false;
@@ -12,28 +10,20 @@ export class POI {
     public prevPoi: POI;
     public nextPoi: POI;
     public poiSteps: Vector3[];
-
     public manager: POIManager;
 
-    public velocityEasingCalculator: Function;
-    public rotationEasingCalculator: Function;
-    public positionEasingCalculator: Function;
+    private velocityEasingCalculator: Function;
+    private rotationEasingCalculator: Function;
+    private positionEasingCalculator: Function;
 
-    public rotationStart: Quaternion = Quaternion.Identity();
-    public rotationEnd: Quaternion = Quaternion.Identity();
-
-    public transformPosition: Vector3 = Vector3.Zero();
-    public transformRotation: Quaternion = Quaternion.Identity();
-    public transformLocalRotation: Quaternion = Quaternion.Identity();
-    public transformLocalEulerAngles: Vector3 = Vector3.Zero();
-
-    public localRotation: Quaternion = Quaternion.Identity();
+    private rotationStart: Quaternion = Quaternion.Identity();
+    private rotationEnd: Quaternion = Quaternion.Identity();
 
     public transform: TransformNode;
 
     public constructor(private lookatType: LookatType, private lookAtAngle: number, private lookAtDistance: number,
         private lookatLocation: Vector3, private startSpeed: number, private velocityEasingType: EasingType, private rotationEasingType: EasingType, private m_positionEasingType: EasingType,
-        segmentDistance: number, transformPosition: Vector3, transformRotation: Quaternion) {
+        segmentDistance: number, transformPosition: Vector3, transformRotation: Quaternion, private autoRollOn: boolean) {
             this.transform = new TransformNode("POI");
             this.transform.position = transformPosition;
             this.transform.rotationQuaternion = transformRotation;
