@@ -20,8 +20,6 @@ export class HeightmapParser {
       
         const index = (Math.floor(this.heightMapSizeY * relPos.y / this.worldHeight) * this.heightMapSizeX + Math.floor(this.heightMapSizeX * relPos.x / this.worldWidth));
         
-        const realHeight = Scalar.Lerp(this.worldMinHeight, this.worldMaxHeight, this.colorHeights[index] / 255);
-
-        return realHeight;
+        return Scalar.Lerp(this.worldMinHeight, this.worldMaxHeight, this.colorHeights[index] / 255);
     }
 }
